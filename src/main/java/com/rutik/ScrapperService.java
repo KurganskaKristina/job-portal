@@ -1,6 +1,8 @@
 package com.rutik;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.Page;
+import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
@@ -34,6 +36,9 @@ public class ScrapperService {
     public void scrap() throws IOException {
 
         try (WebClient webClient = new WebClient()) {
+            webClient.getOptions().setThrowExceptionOnScriptError(false);
+            webClient.setCssErrorHandler(new SilentCssErrorHandler());
+
             HtmlPage page = webClient.getPage(baseUrl);
 
             DomNodeList<DomNode> domNodes = page.querySelectorAll("div.jobs-page li.cat a.cat-link");
@@ -61,6 +66,7 @@ public class ScrapperService {
                 }
             }
 
+            System.out.println("Total vacancies scrapped: " + vacancyEntities.size());
             return;
         }
     }
