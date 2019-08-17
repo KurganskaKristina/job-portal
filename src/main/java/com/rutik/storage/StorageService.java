@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -56,13 +57,15 @@ public class StorageService implements Storage<VacancyEntity> {
         BufferedReader fr = new BufferedReader(new FileReader(storageName));
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        List<VacancyEntity> result = fr.lines()
+        Set<VacancyEntity> result = fr.lines()
                 .map(x -> {
                     VacancyEntity y = gson.fromJson(x, VacancyEntity.class);
                     return y;
                 })
-                .collect(Collectors.toList());
-        return result;
+                .collect(Collectors.toSet());
+
+
+        return new ArrayList<>(result);
     }
 
 
