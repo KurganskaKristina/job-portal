@@ -1,14 +1,12 @@
 package com.rutik;
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.Page;
+
 import com.gargoylesoftware.htmlunit.SilentCssErrorHandler;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.rutik.entity.VacancyEntity;
-import com.sun.tools.javac.util.Assert;
 import org.w3c.dom.Node;
 
 import java.io.IOException;
@@ -57,7 +55,7 @@ public class ScrapperService {
                 // iterate through vacancies in the sections
                 for (DomNode sectionVacancy : sectionVacancies) {
                     String vacancyName = sectionVacancy.asText();
-                    String vacancyUrl = node.getAttributes()
+                    String vacancyUrl = sectionVacancy.getAttributes()
                             .getNamedItem("href")
                             .getTextContent();
 
