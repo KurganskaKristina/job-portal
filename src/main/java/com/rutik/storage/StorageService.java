@@ -2,18 +2,14 @@ package com.rutik.storage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import com.rutik.entity.VacancyEntity;
 
 import java.io.*;
-import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class StorageService implements Storage<VacancyEntity> {
@@ -37,9 +33,9 @@ public class StorageService implements Storage<VacancyEntity> {
 
     @Override
     public void reset() throws IOException {
-    FileWriter fr = new FileWriter(storageName);
-    fr.write("");
-    fr.close();
+        FileWriter fr = new FileWriter(storageName);
+        fr.write("");
+        fr.close();
     }
 
     @Override
@@ -47,8 +43,8 @@ public class StorageService implements Storage<VacancyEntity> {
         Gson gson = new Gson();
         String serialized = gson.toJson(obj) + "\n";
 
-        try (FileWriter fw = new FileWriter(storageName, true)) {
-            fw.append(serialized);
+        try (BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(storageName, true), StandardCharsets.UTF_8))) {
+            bw.append(serialized);
         }
     }
 
