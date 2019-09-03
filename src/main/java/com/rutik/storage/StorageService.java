@@ -15,21 +15,6 @@ import java.util.stream.Collectors;
 public class StorageService implements Storage<VacancyEntity> {
 
     private final String storageName = "vacancies.json";
-    private static StorageService instance;
-
-    private StorageService(){}
-
-    public static StorageService getInstance(){
-        if (instance == null) {
-            synchronized (StorageService.class) {
-                if (instance == null) {
-                    instance = new StorageService();
-                }
-            }
-        }
-        return instance;
-    }
-
 
     @Override
     public void reset() throws IOException {

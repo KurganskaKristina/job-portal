@@ -8,7 +8,7 @@ import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.DomNodeList;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.rutik.entity.VacancyEntity;
-import com.rutik.storage.StorageService;
+import com.rutik.storage.Storage;
 import org.w3c.dom.Node;
 
 import java.io.IOException;
@@ -18,23 +18,15 @@ import java.util.List;
 
 public class ScrapperService {
 
-    private ScrapperService (){}
-    private static ScrapperService instance;
-    public static ScrapperService getInstance() {
-        if (instance == null) {
-            synchronized (ScrapperService.class) {
-                if (instance == null) {
-                    instance = new ScrapperService();
-                }
-            }
-        }
-        return instance;
+    public ScrapperService(Storage storage){
+        this.storage = storage;
     }
 
     private static final String baseUrl = "https://jobs.dou.ua/";
 
+    private Storage storage;
+
     public void scrap() throws IOException {
-        StorageService storage = StorageService.getInstance();
         storage.reset();
 
         try (WebClient webClient = new WebClient(BrowserVersion.FIREFOX_60)) {
