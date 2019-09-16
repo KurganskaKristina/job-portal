@@ -62,9 +62,20 @@ public class ScrapperService {
                     VacancyEntity vacancy = new VacancyEntity(section, vacancyName, vacancyUrl, null);
                     vacancyEntities.add(vacancy);
                 }
-            }
 
+            }
+            for (VacancyEntity vacancyEntity: vacancyEntities){
+                String concreteVacancyUrl = vacancyEntity.getUrl();
+                HtmlPage concreteVacancy = webClient.getPage(concreteVacancyUrl);
+                String concreteVacancyDescription = concreteVacancy.querySelector("div.l-vacancy").asText();
+                vacancyEntity.setDescription(concreteVacancyDescription);
+            }
             System.out.println("Total vacancies scrapped: " + vacancyEntities.size());
+            System.out.println(vacancyEntities.get(0).getDescription());
+            //for(VacancyEntity vac: vacancyEntities){
+            //     System.out.println(vac.getDescription());
+            //}
+
             return;
         }
     }
