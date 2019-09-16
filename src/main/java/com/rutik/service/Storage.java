@@ -1,4 +1,4 @@
-package com.rutik.storage;
+package com.rutik.service;
 
 import java.io.IOException;
 import java.util.List;

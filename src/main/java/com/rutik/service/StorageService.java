@@ -1,4 +1,4 @@
-package com.rutik.storage;
+package com.rutik.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,12 +39,11 @@ public class StorageService implements Storage<VacancyEntity> {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         Set<VacancyEntity> result = fr.lines()
-                .map(x -> {
-                    VacancyEntity y = gson.fromJson(x, VacancyEntity.class);
-                    return y;
+                .map(serializedVacancy -> {
+                    VacancyEntity vacancy = gson.fromJson(serializedVacancy, VacancyEntity.class);
+                    return vacancy;
                 })
                 .collect(Collectors.toSet());
-
 
         return new ArrayList<>(result);
     }
